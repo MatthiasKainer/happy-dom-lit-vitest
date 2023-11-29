@@ -1,0 +1,40 @@
+<html>
+
+<head>
+  <title>Test page</title>
+</head>
+
+<body>
+  <div>
+    <my-custom-element name="john,connor,oberst">
+      <span>Slotted content</span>
+    </my-custom-element>
+  </div>
+  <script type="module">
+    import { html, LitElement } from "https://unpkg.com/lit-element@3.0.2/lit-element.js?module";
+
+    export class MyComponent extends LitElement {
+      static get properties() {
+        return {
+          name: { type: String }
+        };
+      }
+
+      constructor() {
+        super();
+      }
+
+      render() {
+        return this.name?.indexOf(",") > -1 ?
+          html`${this.name.split(",").map(el => html`<p>Hello ${el}!</p>`)}`
+          : html`<p>Hello, ${this.name}!</p>`;
+      }
+    }
+
+    customElements.define('my-custom-element', MyComponent);
+    export const component = document.createElement("my-custom-element")
+    customElements.define('my-custom-element', MyComponent);
+  </script>
+</body>
+
+</html>
